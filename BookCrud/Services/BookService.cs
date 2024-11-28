@@ -10,8 +10,6 @@ public class BookService
     public BookService()
     {
         books = new List<Book>();
-
-
     }
 
     public Book GetExpensiveBook()
@@ -38,7 +36,7 @@ public class BookService
         {
             return null;
         }
-        Book mostPagedBook = books[0];
+        var mostPagedBook = books[0];
         foreach (var book in books)
         {
             if (mostPagedBook.PageNumber < book.PageNumber)
@@ -57,7 +55,7 @@ public class BookService
             return null;
         }
 
-        Book mostReadBook = null;
+        var mostReadBook = new Book();
         int maxReaders = 0;
 
         foreach (var book in books)
@@ -114,39 +112,35 @@ public class BookService
         return null;
     }
 
-    public long AddReaderToBook(Guid bookId, string readerName)
+    public bool AddReaderToBook(Guid bookId, string readerName)
     {
         foreach (var book in books)
         {
             if (bookId == book.Id)
             {
-                if (!book.ReadersName.Contains(readerName))
-                {
-                    book.ReadersName.Add(readerName);  
-                }
-                return book.ReadersName.Count;
+                book.ReadersName.Add(readerName);
+
+                return true;
             }
         }
 
-        return 0;  
+        return false;
     }
 
 
-    public long AddAuthorToBook(Guid bookId, string authorName)
+    public bool AddAuthorToBook(Guid bookId, string authorName)
     {
         foreach (var book in books)
         {
             if (bookId == book.Id)
             {
-                if (!book.AuthorsName.Contains(authorName))
-                {
-                    book.AuthorsName.Add(authorName); 
-                }
-                return book.AuthorsName.Count;
+                book.AuthorsName.Add(authorName);
+
+                return true;
             }
         }
 
-        return 0;  
+        return false;
     }
 
 }
